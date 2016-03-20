@@ -41,6 +41,13 @@ if (!isset($wp_ffpc_config)) {
 /* request uri */
 $wp_ffpc_uri = $_SERVER['REQUEST_URI'];
 
+/* disable New Relic at AMP */
+if (stripos($wp_ffpc_uri, '/amp/')) {
+    if (extension_loaded('newrelic')) {
+        newrelic_disable_autorum();
+    }
+}
+
 /* no cache for robots.txt */
 if ( stripos($wp_ffpc_uri, 'robots.txt') ) {
 	__wp_ffpc_debug__ ( 'Skippings robots.txt hit');
